@@ -20,7 +20,7 @@ function Load() {
         if (hasFetched.current) return;
         hasFetched.current = true;
 
-        axios.post(`${import.meta.env.VITE_API_URL}/call-hash`, JSON.stringify(hash), {
+        axios.post(`${import.meta.env.VITE_API_URL}/call-hash`, hash, {
             headers: {
                 "Content-Type": "application/json"
             }
