@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from 'react';
 import styles from './Home.module.scss';
 
@@ -26,6 +27,9 @@ function Home() {
                     </div>
                 )
             }
+            <Link to="/LbZPaieUVeg">
+                <button>Ir para Load</button>
+            </Link>
 
             <footer className={styles.footer}>
                 <label>
