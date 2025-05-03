@@ -3,12 +3,12 @@ import axios from 'axios';
 import styles from './Load.module.scss';
 
 function Load() {
-    const [currentHash, setCurrentHash] = useState("kajhsbdia876%*$");
+    const [currentHash, setCurrentHash] = useState("");
     const [currentUrl, setCurrentUrls] = useState("");
     const [currentPath, setCurrentPath] = useState("");
     const [message, setMessage] = useState("");
 
-    const hasFetched = useRef(false); // <-- evita chamadas duplicadas
+    const hasFetched = useRef(false);
 
     function redirectToOriginalUrl(url) {
         if (url) {
@@ -17,7 +17,7 @@ function Load() {
     }
 
     useEffect(() => {
-        if (hasFetched.current) return; // impede execução duplicada
+        if (hasFetched.current) return;
         hasFetched.current = true;
 
         const parts = window.location.pathname.split("/");
@@ -25,7 +25,7 @@ function Load() {
         setCurrentPath(window.location.pathname);
         setCurrentHash(hash);
 
-        axios.post(`${process.env.REACT_APP_API_URL}/call-hash`, JSON.stringify(hash), {
+        axios.post(`${import.meta.env.VITE_API_URL}/call-hash`, JSON.stringify(hash), {
             headers: {
                 "Content-Type": "application/json"
             }
