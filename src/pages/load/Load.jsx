@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Load.module.scss';
 
 function Load() {
-    const [currentHash, setCurrentHash] = useState("");
+    const { hash } = useParams(); // <- capturando o hash da URL
     const [currentUrl, setCurrentUrls] = useState("");
-    const [currentPath, setCurrentPath] = useState("");
     const [message, setMessage] = useState("");
 
     const hasFetched = useRef(false);
@@ -19,11 +19,6 @@ function Load() {
     useEffect(() => {
         if (hasFetched.current) return;
         hasFetched.current = true;
-
-        const parts = window.location.pathname.split("/");
-        const hash = parts[1];
-        setCurrentPath(window.location.pathname);
-        setCurrentHash(hash);
 
         axios.post(`${import.meta.env.VITE_API_URL}/call-hash`, JSON.stringify(hash), {
             headers: {
@@ -45,13 +40,12 @@ function Load() {
             console.error("Erro na requisição:", error);
             setMessage("Erro ao conectar com a API.");
         });
-    }, []);
+    }, [hash]);
 
     return (
         <div className={styles.mainContainer}>
             <label>Redirecionando...</label>
-            <label>Path: {currentPath}</label>
-            <label>Hash: {currentHash}</label>
+            <label>Hash: {hash}</label>
             <label>Url: {currentUrl}</label>
             {message && <label style={{ color: "red" }}>{message}</label>}
         </div>
